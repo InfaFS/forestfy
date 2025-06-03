@@ -1,50 +1,89 @@
-# Welcome to your Expo app 👋
+![Banner](https://github.com/thirdweb-example/thirdweb-auth-express/assets/17715009/06383e68-9c65-4265-8505-e88e573443f9)
+# thirdweb expo starter
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Starter template to build an onchain react native app with [thirdweb](https://thirdweb.com/) and [expo](https://expo.dev/).
+
+### Features
+
+- in-app wallets using phone number, email or social logins to create a wallet for the user
+- smart accounts to sponsor gas
+- connecting to external wallets like MetaMask via WalletConnect
+- autoconnecting to the last connected wallet on launch
+- reading contract state and events
+- writing to the blockchain
+
+## Installation
+
+Install the template using [thirdweb create](https://portal.thirdweb.com/cli/create)
+
+```bash
+  npx thirdweb create app --react-native
+```
 
 ## Get started
 
 1. Install dependencies
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
 ```bash
-npm run reset-project
+yarn install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Get your thirdweb client id
 
-## Learn more
+Rename the `.env.example` file to `.env` and paste in your thirdweb client id.
 
-To learn more about developing your project with Expo, look at the following resources:
+You can obtain a free client id from the [thirdweb dashboard](https://thirdweb.com/dashboard/settings).
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+3. Prebuild the ios and android directories
 
-## Join the community
 
-Join our community of developers creating universal apps.
+> [!IMPORTANT]  
+> The thirdweb SDK uses native modules, which means it cannot run on expo GO. You must build the ios and android apps to link the native modules.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx expo prebuild
+```
+
+This will create the `ios` and `android` directories.
+
+4. Start the app
+
+```bash
+yarn ios
+```
+
+or
+
+```bash
+yarn android
+```
+
+To run this app, you'll need either:
+
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+
+## Troubleshooting
+
+### OpenSSL Error on Xcode 16
+
+If using xcode 16, you may encounter a OpenSSL error when trying to build the app. This is because xcode 16 requires a newer version of OpenSSL than the one specified in the current app.json.
+
+To fix this, change the version of OpenSSL specified in the `app.json` file to `3.3.2000`.
+
+- Open the `app.json` file
+- Find the `ios` > `extraPods` section
+- Set `"version": "3.3.2000"` for the `OpenSSL-Universal` pod
+- Save the file
+
+Then run `npx expo prebuild` to update the native modules with the new OpenSSL version and run the app again.
+
+## Additional Resources
+
+- [Documentation](https://portal.thirdweb.com/typescript/v5)
+- [Templates](https://thirdweb.com/templates)
+- [YouTube](https://www.youtube.com/c/thirdweb)
+
+## Support
+
+For help or feedback, please [visit our support site](https://thirdweb.com/support)
